@@ -10,5 +10,10 @@
     "grpc"
   ],
   "author": "Ömer Furkan Gençer",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.1.6",
+    "@grpc/proto-loader": "^0.5.5",
+    "uuid": "^8.3.0"
+  }
 }
