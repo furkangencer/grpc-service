@@ -2,12 +2,14 @@
   "name": "grpc-service",
   "version": "1.0.0",
   "description": "Simple gRPC Service",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
+    "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "grpc"
+    "grpc",
+    "protocol-buffers"
   ],
   "author": "Ömer Furkan Gençer",
   "license": "ISC",
@@ -15,5 +17,9 @@
     "@grpc/grpc-js": "^1.1.6",
     "@grpc/proto-loader": "^0.5.5",
     "uuid": "^8.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com:petrucci53/grpc-service"
   }
 }
