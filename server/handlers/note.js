@@ -1,5 +1,7 @@
 const grpc = require('@grpc/grpc-js');
 const { v4: uuidv4 } = require('uuid');
+const events = require('events');
+const noteStream = new events.EventEmitter();
 
 const notes = [
   {id: '1', title: 'Note 1', content: 'Content 1'},
@@ -25,6 +27,7 @@ module.exports = {
     let newNote = call.request;
     newNote.id = uuidv4();
     notes.push(newNote);
+    noteStream.emit('new_note', newNote);
     callback(null, newNote);
   },
   update: (call, callback) => {
@@ -51,5 +54,10 @@ module.exports = {
         details: "Not found"
       })
     }
+  },
+  watch: (call, callback) => {
+    noteStream.on('new_note', (note) => {
+      call.write(note);
+    });
   }
 }

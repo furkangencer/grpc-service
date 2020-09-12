@@ -8,6 +8,7 @@ service NoteService {
   rpc Insert (Note) returns (Note) {}
   rpc Update (Note) returns (Note) {}
   rpc Delete (NoteRequestId) returns (Empty) {}
+  rpc Watch (Empty) returns (stream Note) {}
 }
 
 message Empty {}
