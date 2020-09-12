@@ -12,15 +12,10 @@ const options = {
   oneofs: true
 };
 const packageDefinition = protoLoader.loadSync(protoFiles, options);
-const { noteservice } = grpc.loadPackageDefinition(packageDefinition);
+const {
+  noteservice: { NoteService },
+} = grpc.loadPackageDefinition(packageDefinition);
 
-const { noteHandlers } = require('./handlers');
+const client = new NoteService(`${host}:${port}`, grpc.credentials.createInsecure());
 
-const server = new grpc.Server();
-server.addService(noteservice.NoteService.service, noteHandlers);
-
-server.bindAsync(`${host}:${port}`, grpc.ServerCredentials.createInsecure(), (err)=> {
-  if (err) throw err;
-  server.start()
-  console.log(`Server running at ${host}:${port}`);
-});
+module.exports = client;

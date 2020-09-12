@@ -1,34 +1,34 @@
 const grpc = require('@grpc/grpc-js');
 const { v4: uuidv4 } = require('uuid');
 
-const note = [
+const notes = [
   {id: '1', title: 'Note 1', content: 'Content 1'},
   {id: '2', title: 'Note 2', content: 'Content 2'}
 ]
 
 module.exports = {
   list: (call, callback) => {
-    callback(null, note)
+    callback(null, { notes });
   },
   get: (call, callback) => {
-    let note = note.find((note) => note.id === call.request.id)
-    if (note) {
-      callback(null, note)
+    let foundNote = notes.find((note) => note.id === call.request.id);
+    if (foundNote) {
+      callback(null, foundNote);
     } else {
       callback({
         code: grpc.status.NOT_FOUND,
         details: "Not found"
-      })
+      });
     }
   },
   insert: (call, callback) => {
-    let note = call.request
-    note.id = uuidv4()
-    note.push(note)
-    callback(null, note)
+    let newNote = call.request;
+    newNote.id = uuidv4();
+    notes.push(newNote);
+    callback(null, newNote);
   },
   update: (call, callback) => {
-    let existingNote = note.find((note) => note.id === call.request.id)
+    let existingNote = notes.find((note) => note.id === call.request.id)
     if (existingNote) {
       existingNote.title = call.request.title
       existingNote.content = call.request.content
@@ -41,9 +41,9 @@ module.exports = {
     }
   },
   delete: (call, callback) => {
-    let existingNoteIndex = note.findIndex((note) => note.id === call.request.id)
+    let existingNoteIndex = notes.findIndex((note) => note.id === call.request.id)
     if (existingNoteIndex !== -1) {
-      note.splice(existingNoteIndex, 1)
+      notes.splice(existingNoteIndex, 1)
       callback(null, {})
     } else {
       callback({
