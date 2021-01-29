@@ -10,8 +10,8 @@ Runing the command below will start the server in localhost with the port 50051.
 Example commands below will give you the idea on how to make request to gRPC server.
 
     npm run client list
-    npm run client get --id 1
-    npm run client update --id 1 --title 'Test' --content 'Test Content'
+    npm run client get --id '1A'
+    npm run client update --id '1A' --title 'Test' --content 'Test Content'
     npm run client watch
 
 ## Add New Service
